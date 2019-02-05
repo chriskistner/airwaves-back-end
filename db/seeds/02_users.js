@@ -9,6 +9,7 @@ exports.seed = function(knex, Promise) {
           id: 1,
           user_id: '989sdasudsa7',
           user_name: 'Chris',
+          email: 'chris.kistner0@gmail.com',
           password: 'password',
           zip_code: 98002
         },
@@ -16,6 +17,7 @@ exports.seed = function(knex, Promise) {
           id: 2,
           user_id: '99819u43kzjb',
           user_name: 'Juniper',
+          email: 'juniberryjuneboug@yahoo.com',
           password: 'password',
           zip_code: 98038
         }
