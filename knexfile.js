@@ -1,5 +1,5 @@
 const path = require('path')
-const devdb = 'mtg_dev'
+const devdb = 'airwaves_db_dev'
 
 module.exports = {
   development: {
