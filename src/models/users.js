@@ -17,7 +17,7 @@ function getUser(userId) {
 
 function getAllUsers() {
     return db('users')
-}
+};
 
 function deleteUser(userId) {
     return db('users')
@@ -64,4 +64,4 @@ module.exports = {
     createUser,
     getAllUsers,
     deleteUser,
-}
+};
