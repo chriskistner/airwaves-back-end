@@ -2,7 +2,7 @@ const authModel = require('../models/auth');
 const jwt = require('jsonwebtoken');
 
 function login (req, res, next) {
-    if(!req.body.userEmail) {
+    if(!req.body.email) {
         return next({status: 400, error: "Login email required"})
     };
 
@@ -10,16 +10,16 @@ function login (req, res, next) {
         return next({ status: 400, error: "password required"})
     }
 
-    authModel.login(req.body.userName, req.body.password)
+    authModel.login(req.body.email, req.body.password)
         .then(function(user) {
-            const token = jwt.sign({id: user.id}, process.env.SECRET)
+            const token = jwt.sign({id: user.user_id}, process.env.SECRET)
 
             return res.status(200).send({ token })
         })
         .catch((err) => {
             next({status: 400, error: "login attempt failed"})
         });
-}
+};
 
 function getAuthStatus(req, res, next) {
     res.status(200).send({id:req.claim.id})
@@ -27,14 +27,14 @@ function getAuthStatus(req, res, next) {
 
 function userAuthenticated(req, res, next) {
     if(!req.headers.authorization) {
-        return next({status: 401, error: "Unauthorized User!"})
+        return next({status: 401, error: "Token Missing!"})
     }
 
     const [scheme, credentials] = req.headers.authorization.split(' ');
 
     jwt.verify(credentials, process.env.SECRET, (err, payload) => {
         if(err) {
-            return next({status: 401, error: "Unauthorized User!"})
+            return next({status: 401, error: "Token did not authenticate"})
         }
 
         req.claim = payload;
@@ -44,15 +44,15 @@ function userAuthenticated(req, res, next) {
 };
 
 function isSelf(req, res, next) {
-    if(parseInt(req.params.user_id) !== req.claim.id) {
-        return next({ status: 401, error: "Unauthorized User"})
+    if(req.params.userId !== req.claim.id) {
+        return next({ status: 401, error: "Is Not Self"})
     }
     next()
-}
+};
 
 module.exports = {
     login,
     getAuthStatus,
     userAuthenticated,
     isSelf
-}
+};

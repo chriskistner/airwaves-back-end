@@ -3,8 +3,9 @@ const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
 
 function getUser(userId) {
+    console.log(userId)
     return db('users')
-    .where({id: userId})
+    .where({user_id: userId})
     .then(function([result]) {
         if(result){
             return result
@@ -41,10 +42,11 @@ function createUser(userName, password, userEmail, zipCode) {
         }
     })
     .then(function(hashedPassword) {
+        const newId = uuidv4();
         return (
             db('users')
             .insert({
-                user_id: uuidv4().splice(0, 7),
+                user_id: newId.slice(0,8),
                 user_name: userName,
                 email: userEmail,
                 password: hashedPassword,

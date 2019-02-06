@@ -13,7 +13,6 @@ function createUser(req, res, next) {
     if(!req.body.zipCode)
     return next({ status: 400, message: 'Missing Zip Code'})
       
-
     userModel.createUser(req.body.userName, req.body.password, req.body.email, req.body.zipCode)
     .then(function(data) {
         res.status(201).send({ data })
@@ -23,7 +22,7 @@ function createUser(req, res, next) {
 function getUser (req, res, next) {
     if(!req.params.userId) return next({status: 400, message: 'Bad Request, UserID is required'});
 
-    userModel.getUser(req.params.user_id)
+    userModel.getUser(req.params.userId)
     .then(result => {
         if(!result) next({ status: 400, message: "User Not Found"});
         res.status(200).send({ result })

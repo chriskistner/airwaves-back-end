@@ -15,9 +15,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const user = require('./src/routes/users');
-// const auth = require('./src/routes/auth');
+const auth = require('./src/routes/auth');
 
-// app.use('/auth', auth);
+app.use('/auth', auth);
 app.use('/users', user);
 
 app.use(function(req, res, next) {
