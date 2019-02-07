@@ -1,11 +1,8 @@
 const bcrypt = require('bcrypt')
-const userModel = require('./users')
 const db = require('../../db')
 
 function login(userEmail, password) {
-
     let user;
-
     return db('users')
         .first()
         .select('*')
@@ -14,7 +11,6 @@ function login(userEmail, password) {
             if (!data) throw {stats: 400, error: "Unauthorized Login!"};
 
             user = data;
-
             return bcrypt.compareSync(password, data.password)
         })
         .then(function(status) {

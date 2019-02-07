@@ -11,14 +11,14 @@ function login (req, res, next) {
     }
 
     authModel.login(req.body.email, req.body.password)
-        .then(function(user) {
-            const token = jwt.sign({id: user.user_id}, process.env.SECRET)
+    .then(function(user) {
+        const token = jwt.sign({id: user.user_id}, process.env.SECRET)
 
-            return res.status(200).send({ token })
-        })
-        .catch((err) => {
-            next({status: 400, error: "login attempt failed"})
-        });
+        return res.status(200).send({ token })
+    })
+    .catch((err) => {
+        next({status: 400, error: "login attempt failed"})
+    });
 };
 
 function getAuthStatus(req, res, next) {

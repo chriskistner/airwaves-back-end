@@ -18,7 +18,7 @@ const user = require('./src/routes/users');
 const auth = require('./src/routes/auth');
 
 app.use('/auth', auth);
-app.use('/users', user);
+app.use('/user', user);
 
 app.use(function(req, res, next) {
   next({status: 404, error: 'Route Not Found'})
