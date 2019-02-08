@@ -1,6 +1,7 @@
 const userModel = require('../models/users');
 
 function createUser(req, res, next) {
+
     if(!req.body.userName)
         return next({ status: 400, message: 'Missing User Name'});
       
