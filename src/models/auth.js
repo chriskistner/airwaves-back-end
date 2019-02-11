@@ -11,7 +11,6 @@ function login(userEmail, password) {
             if (!data) throw {stats: 400, error: "Unauthorized Login!"};
 
             user = data;
-            console.log(user)
             return bcrypt.compareSync(password, data.password)
         })
         .then(function(status) {
