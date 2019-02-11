@@ -31,7 +31,7 @@ function deleteUser(userId) {
     })
 };
 
-function createUser(userName, password, userEmail, zipCode) {
+function createUser(userName, password, userEmail, latitude, longitude) {
     return db('users')
     .where({email: userEmail })
     .then(function([result]) {
@@ -50,7 +50,8 @@ function createUser(userName, password, userEmail, zipCode) {
                 user_name: userName,
                 email: userEmail,
                 password: hashedPassword,
-                zip_code: zipCode
+                home_latitude: latitude,
+                home_longitude: longitude
             })
             .returning('*')
         )
