@@ -29,7 +29,7 @@ function createUser(req, res, next) {
 
     axios.get(`${googleUrl}${formatAddress},+${formatCity},+${formatState}&key=${key}`)
     .then(function(response){ 
-        userModel.createUser(req.body.userName, req.body.password, req.body.email, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
+        return userModel.createUser(req.body.userName, req.body.password, req.body.email, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
     })
     .then(function(data){
         res.status(201).send({data})

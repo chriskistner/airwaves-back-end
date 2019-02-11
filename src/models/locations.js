@@ -25,9 +25,6 @@ function createLocation(userId, name, longitude, latitude) {
         latitude: latitude
     })
     .returning('*')
-    .then(function([data]){
-        return data
-    })
 }
 
 function getAllLocations() {

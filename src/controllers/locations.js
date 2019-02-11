@@ -36,10 +36,9 @@ function createLocations(req, res, next) {
 
     axios.get(`${googleUrl}${formatAddress},+${formatCity},+${formatState}&key=${key}`)
     .then(response => { 
-        locationModel.createLocation(req.params.userId, req.body.name, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
+        return locationModel.createLocation(req.params.userId, req.body.name, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
     })
     .then(result => {
-        console.log(result)
         res.status(201).send({result})
     })
 }
