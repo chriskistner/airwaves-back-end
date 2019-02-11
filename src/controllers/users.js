@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 const userModel = require('../models/users');
 const googleUrl = process.env.GOOGLE_GEOCODE_URL
 const key = process.env.GOOGLE_API_KEY
