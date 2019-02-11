@@ -10,6 +10,7 @@ router.get('/', userController.getAllUsers)
 router.get('/:userId', authController.userAuthenticated, authController.isSelf, userController.getUser);
 router.delete('/:userId', authController.userAuthenticated, authController.isSelf, userController.deleteUser);
 
-router.get('/:userId/locations', locationController.getUserLocations)
+router.get('/:userId/locations', locationController.getUserLocations);
+router.post('/:userId/locations', locationController.createLocations)
 
 module.exports = router
