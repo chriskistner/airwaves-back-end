@@ -2,7 +2,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('routes', table => {
       table.increments()
-      table.string('user_id').references('user_id').inTable('users').onDelete('CASCADE');
+      table.string('user').references('user_id').inTable('users').onDelete('CASCADE');
       table.string('name').notNullable();
       table.string('polyline').notNullable();
       table.string('levels').notNullable();

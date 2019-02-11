@@ -2,10 +2,9 @@ const db = require('../../db');
 
 function getUserLocations(userId) {
     return db('locations')
-    // .join('locations', 'users.user_id', 'locations.user_id')
-    .where({'locations.user_id': userId})
-    .orderBy('locations.created_at', 'desc')
-    .orderBy('locations.updated_at', 'desc')
+    .where({user: userId})
+    .orderBy('created_at', 'desc')
+    .orderBy('updated_at', 'desc')
     .returning('*')
     .then(function([result]) {
         if(result){

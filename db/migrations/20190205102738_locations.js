@@ -1,7 +1,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('locations', table => {
       table.increments()
-      table.string('user_id').references('user_id').inTable('users');
+      table.string('user').references('user_id').inTable('users');
       table.string('name').notNullable();
       table.decimal('longitude', null).notNullable();
       table.decimal('latitude', null).notNullable();
