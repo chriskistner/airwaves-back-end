@@ -6,7 +6,8 @@ exports.up = function(knex, Promise) {
       table.string('user_name').notNullable().unique();
       table.string('email').notNullable().unique();
       table.string('password').notNullable();
-      table.integer('zip_code').notNullable()
+      table.decimal('home_longitude', null).notNullable();
+      table.decimal('home_latitude', null).notNullable();
       table.timestamps(true, true)
     })
   };

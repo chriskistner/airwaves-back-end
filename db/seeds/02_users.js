@@ -11,7 +11,8 @@ exports.seed = function(knex, Promise) {
           user_name: 'Chris',
           email: 'chris.kistner0@gmail.com',
           password: 'password',
-          zip_code: 98002
+          home_longitude: 47.380932,
+          home_latitude: -122.234840
         },
         {
           id: 2,
@@ -19,7 +20,9 @@ exports.seed = function(knex, Promise) {
           user_name: 'Juniper',
           email: 'juniberryjuneboug@yahoo.com',
           password: 'password',
-          zip_code: 98038
+          home_longitude: 47.307522,
+          home_latitude: -122.225754
+
         }
       ])
     })
