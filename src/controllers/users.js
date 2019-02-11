@@ -1,7 +1,7 @@
 const axios = require('axios');
 const userModel = require('../models/users');
-const googleUrl = process.env.GOOGLE_GEOCODE_URL
-const key = process.env.GOOGLE_API_KEY
+const googleUrl = process.env.GOOGLE_GEOCODE_URL;
+const key = process.env.GOOGLE_API_KEY;
 
 function createUser(req, res, next) {
 
@@ -29,7 +29,7 @@ function createUser(req, res, next) {
 
     axios.get(`${googleUrl}${formatAddress},+${formatCity},+${formatState}&key=${key}`)
     .then(function(response){ 
-        userModel.createUser(req.body.userName, req.body.password, req.body.email, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
+        return userModel.createUser(req.body.userName, req.body.password, req.body.email, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
     })
     .then(function(data){
         res.status(201).send({data})

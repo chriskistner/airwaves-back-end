@@ -1,11 +1,10 @@
 exports.up = function(knex) {
     return knex.schema.createTable('locations', table => {
       table.increments()
-      table.integer('user_id').references('id').inTable('users').onDelete('CASCADE');
+      table.string('user').references('user_id').inTable('users');
       table.string('name').notNullable();
-      table.decimal('longitude', 5, 2).notNullable();
-      table.decimal('latitude', 5, 2).notNullable();
-      table.text('description').defaultTo('No description given.')
+      table.decimal('longitude', null).notNullable();
+      table.decimal('latitude', null).notNullable();
       table.timestamps(true, true)
     })
   };
