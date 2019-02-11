@@ -7,21 +7,21 @@ exports.seed = function(knex, Promise) {
       return knex('routes').insert([
         {
           id: 1,
-          user_id: 1,
+          user_id: '8H04HQ16',
           name: 'Commute',
           polyline: 'ijbfjhdbfsdfnkjsfl',
           levels: 'BBB'
         },
         {
           id: 2,
-          user_id: 1,
+          user_id: '8H04HQ16',
           name: 'Game Night',
           polyline: 'oawiuhsdi79476',
           levels: 'BBb'
         },
         {
           id: 3,
-          user_id: 2,
+          user_id: 'NJ69KP09',
           name: 'Commute',
           polyline: 'lkasjkasdjbjdsbfas',
           levels: 'BbB'

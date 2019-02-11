@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
 
 function getUser(userId) {
-    console.log(userId)
     return db('users')
     .where({user_id: userId})
     .then(function([result]) {
