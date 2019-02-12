@@ -32,7 +32,20 @@ function getUserLocation(req, res, next) {
         res.status(200).send({result})
     })
 
-}
+};
+
+function dropUserLocation(req, res, next) {
+    if (!req.params.userId) return next({status: 400, message: "Bad Request, UserId Required"});
+
+    if (!req.params.locId) return next({status: 400, message: "Bad Request, locId Required"});
+
+    locationModel.deleteLocation(req.params.userId, req.params.locId)
+    .then(result => {
+        if(!result) next({status: 400, message: "Can't find locations"})
+        res.status(200).send({result})
+    })
+
+};
 
 function createLocations(req, res, next) {
     if(!req.params.userId) return next({status: 400, message: "Bad Request, UserId Required"});
@@ -60,5 +73,6 @@ module.exports = {
     getAllLocations,
     getUserLocations,
     getUserLocation,
+    dropUserLocation,
     createLocations
 }

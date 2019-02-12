@@ -26,7 +26,7 @@ function getUserLocation(userId, locationId){
         user: userId
     })
     .returning('*')
-}
+};
 
 function createLocation(userId, name, longitude, latitude) {
     return db('locations')
@@ -35,6 +35,16 @@ function createLocation(userId, name, longitude, latitude) {
         name: name,
         longitude: longitude,
         latitude: latitude
+    })
+    .returning('*')
+};
+
+function deleteLocation(userId, locationId) {
+    return db('locations')
+    .del()
+    .where({
+        id: locationId,
+        user: userId
     })
     .returning('*')
 }
@@ -47,5 +57,6 @@ module.exports = {
     getAllLocations,
     getUserLocations,
     getUserLocation,
+    deleteLocation,
     createLocation
 }
