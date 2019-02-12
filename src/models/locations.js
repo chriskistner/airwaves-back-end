@@ -7,6 +7,8 @@ function getUserLocations(userId) {
         const promises = places.map(place => {
             return db('locations')
             .where('locations.user', userId)
+            .orderBy('locations.created_at', 'desc')
+            .orderBy('locations.updated_at', 'desc')
             .then(function(data){
                 place.locations = data
                 return place
@@ -14,6 +16,16 @@ function getUserLocations(userId) {
         })
         return Promise.all(promises);
     })
+};
+
+function getUserLocation(userId, locationId){
+    return db('locations')
+    .first()
+    .where({
+        id: locationId,
+        user: userId
+    })
+    .returning('*')
 };
 
 function createLocation(userId, name, longitude, latitude) {
@@ -25,6 +37,16 @@ function createLocation(userId, name, longitude, latitude) {
         latitude: latitude
     })
     .returning('*')
+};
+
+function deleteLocation(userId, locationId) {
+    return db('locations')
+    .del()
+    .where({
+        id: locationId,
+        user: userId
+    })
+    .returning('*')
 }
 
 function getAllLocations() {
@@ -34,5 +56,7 @@ function getAllLocations() {
 module.exports = {
     getAllLocations,
     getUserLocations,
+    getUserLocation,
+    deleteLocation,
     createLocation
 }

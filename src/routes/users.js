@@ -10,7 +10,8 @@ router.get('/', userController.getAllUsers)
 router.get('/:userId', authController.userAuthenticated, authController.isSelf, userController.getUser);
 router.delete('/:userId', authController.userAuthenticated, authController.isSelf, userController.deleteUser);
 
-router.get('/:userId/locations', locationController.getUserLocations);
-router.post('/:userId/locations', locationController.createLocations)
-
+router.post('/:userId/locations', authController.userAuthenticated, authController.isSelf, locationController.createLocations)
+router.get('/:userId/locations', authController.userAuthenticated, authController.isSelf, locationController.getUserLocations);
+router.get('/:userId/locations/:locId', authController.userAuthenticated, authController.isSelf, locationController.getUserLocation);
+router.delete('/:userId/locations/:locId', authController.userAuthenticated, authController.isSelf, locationController.dropUserLocation);
 module.exports = router
