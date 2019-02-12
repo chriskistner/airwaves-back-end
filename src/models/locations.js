@@ -18,6 +18,16 @@ function getUserLocations(userId) {
     })
 };
 
+function getUserLocation(userId, locationId){
+    return db('locations')
+    .first()
+    .where({
+        id: locationId,
+        user: userId
+    })
+    .returning('*')
+}
+
 function createLocation(userId, name, longitude, latitude) {
     return db('locations')
     .insert({
@@ -36,5 +46,6 @@ function getAllLocations() {
 module.exports = {
     getAllLocations,
     getUserLocations,
+    getUserLocation,
     createLocation
 }

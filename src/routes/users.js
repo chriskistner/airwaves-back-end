@@ -12,5 +12,6 @@ router.delete('/:userId', authController.userAuthenticated, authController.isSel
 
 router.post('/:userId/locations', authController.userAuthenticated, authController.isSelf, locationController.createLocations)
 router.get('/:userId/locations', authController.userAuthenticated, authController.isSelf, locationController.getUserLocations);
+router.get('/:userId/locations/:locId', authController.userAuthenticated, authController.isSelf, locationController.getUserLocation);
 
 module.exports = router
