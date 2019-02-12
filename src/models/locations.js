@@ -7,6 +7,8 @@ function getUserLocations(userId) {
         const promises = places.map(place => {
             return db('locations')
             .where('locations.user', userId)
+            .orderBy('locations.created_at', 'desc')
+            .orderBy('locations.updated_at', 'desc')
             .then(function(data){
                 place.locations = data
                 return place
