@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/chriskistner/airwaves-back-end#readme",
   "dependencies": {
+    "@mapbox/polyline": "^1.0.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",

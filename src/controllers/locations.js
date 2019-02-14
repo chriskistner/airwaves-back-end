@@ -4,7 +4,7 @@ const googleUrl = process.env.GOOGLE_GEOCODE_URL;
 const key = process.env.GOOGLE_API_KEY;
 
 function getAllLocations (req, res, next) {
-    userModel.getAllLocations()
+    locationModel.getAllLocations()
     .then(result => {
         if(!result) next({ status: 400, message: "Server Error"});
         res.status(200).send({ result})
