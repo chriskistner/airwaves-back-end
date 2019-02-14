@@ -47,7 +47,7 @@ function deleteLocation(userId, locationId) {
         user: userId
     })
     .returning('*')
-}
+};
 
 function getAllLocations() {
     return db('locations')
