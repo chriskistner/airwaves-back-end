@@ -12,6 +12,20 @@ function getUserRoutes(req, res, next) {
     })
 };
 
+function getUserRoute(req, res, next) {
+    if (!req.params.userId) return next({status: 400, message: "Bad Request, UserId Required"});
+
+    if (!req.params.routeId) return next({status: 400, message: "Bad Request, locId Required"});
+
+    routeModel.getUserRoute(req.params.userId, req.params.routeId)
+    .then(result => {
+        if(!result) next({status: 400, message: 'Route not found'})
+        result.polyline = polyline.decode(result.polyline)
+        res.status(200).send(result)
+    })
+}
+
+
 function dropUserRoute(req, res, next) {
     if (!req.params.userId) return next({status: 400, message: "Bad Request, UserId Required"});
 
@@ -42,6 +56,7 @@ function createUserRoute(req, res, next) {
 
 module.exports={
     getUserRoutes,
+    getUserRoute,
     createUserRoute,
     dropUserRoute
 }

@@ -6,17 +6,22 @@ const authController = require('../controllers/auth');
 const locationController = require('../controllers/locations');
 const routeController = require('../controllers/routes');
 
+// General User Routes
 router.post('/', userController.createUser);
 router.get('/', userController.getAllUsers)
 router.get('/:userId', authController.userAuthenticated, authController.isSelf, userController.getUser);
 router.delete('/:userId', authController.userAuthenticated, authController.isSelf, userController.deleteUser);
 
+//User Location Routes
 router.post('/:userId/locations', authController.userAuthenticated, authController.isSelf, locationController.createLocations)
 router.get('/:userId/locations', authController.userAuthenticated, authController.isSelf, locationController.getUserLocations);
 router.get('/:userId/locations/:locId', authController.userAuthenticated, authController.isSelf, locationController.getUserLocation);
 router.delete('/:userId/locations/:locId', authController.userAuthenticated, authController.isSelf, locationController.dropUserLocation);
 
-router.get('/:userId/routes', routeController.getUserRoutes);
-router.post('/:userId/routes', routeController.createUserRoute);
-router.delete('/:userId/routes/:routeId', routeController.dropUserRoute);
+//User Route Routes
+router.get('/:userId/routes', authController.userAuthenticated, authController.isSelf, routeController.getUserRoutes);
+router.get('/:userId/routes/:routeId', authController.userAuthenticated, authController.isSelf, routeController.getUserRoute);
+router.post('/:userId/routes', authController.userAuthenticated, authController.isSelf, routeController.createUserRoute);
+router.delete('/:userId/routes/:routeId', authController.userAuthenticated, authController.isSelf, routeController.dropUserRoute);
+
 module.exports = router
