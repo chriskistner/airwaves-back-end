@@ -9,7 +9,7 @@ exports.seed = function(knex, Promise) {
           id: 1,
           user_id: '8H04HQ16',
           user_name: 'Chris',
-          email: 'chris.kistner0@gmail.com',
+          email: 'chris.kistner@gmail.com',
           password: 'password',
           address: '2601 17th St SE',
           city: 'Auburn',
