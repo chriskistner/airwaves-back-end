@@ -5,6 +5,7 @@ const userController = require('../controllers/users');
 const authController = require('../controllers/auth');
 const locationController = require('../controllers/locations');
 const routeController = require('../controllers/routes');
+const alertController = require('../controllers/alerts')
 
 // General User Routes
 router.post('/', userController.createUser);
@@ -24,5 +25,8 @@ router.get('/:userId/routes', authController.userAuthenticated, authController.i
 router.get('/:userId/routes/:routeId', authController.userAuthenticated, authController.isSelf, routeController.getUserRoute);
 router.post('/:userId/routes', authController.userAuthenticated, authController.isSelf, routeController.createUserRoute);
 router.delete('/:userId/routes/:routeId', authController.userAuthenticated, authController.isSelf, routeController.dropUserRoute);
+
+// User Alert Routes
+router.post('/:userId/alerts', authController.userAuthenticated, authController.isSelf, alertController.createAlert)
 
 module.exports = router
