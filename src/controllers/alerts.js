@@ -1,9 +1,19 @@
 const polyline = require('@mapbox/polyline');
 const axios = require('axios');
-const mailGunUrl = process.env.MAILGUN_URL;
 const mailGunKey = process.env.MAILGUN_API_KEY;
 const mailGunDomain = process.env.MAILGUN_DOMAIN;
 const mailgun = require('mailgun-js')({apiKey: mailGunKey, domain: mailGunDomain});
+
+function getUserAlerts(req, res, next) {
+    if(!req.params.userId) return next({status: 400, message: "Bad Request, UserId Required"});
+
+    alertModel.getUserAlerts(req.params.userId)
+    .then(result => {
+        if(!result) next({status: 400, message: 'Routes not found'})
+        // const polylines = result[0].routes.map(line => line.polyline = polyline.decode(line.polyline))
+        res.status(200).send({result})
+    })
+};
 
 function createAlert(req,res,next) {
     if(!req.params.userId) return next({status: 400, message: "Bad Request, UserId Required"});
@@ -14,13 +24,18 @@ function createAlert(req,res,next) {
 
     if(req.body.frequency !== 'daily' || req.body.type !== 'weekly') return next({status: 400, message: "Invalid Alert Schedule Type!"})
 
-    if(!req.body.coordinates) return next({status: 400, message: "Unable to Associate Alert with a Location or Route"});
-
-    const latitude = null;
-    const longitude = null;
-    const polyline = null;
-
-    // if(req.body.coordinates)
+    if(req.body.type = 'route') {
+        const encodedLine = polyline.encode(req.body.polyline);
+        alertModel.createAlert(req.params.userId, req.body,name, req.body.type, req.body.frequency, encodedLine, req.body.longitude = '', req.body.latitude = '')
+        .then(result => {
+            res.status(201).send({result})
+        })
+    } else {
+        alertModel.createAlert(req.params.userId, req.body,name, req.body.type, req.body.frequency, req.body.polyine = '', req.body.longitude, req.body.latitude)
+        .then(result => {
+            res.status(201).send({result})
+        })
+    }
 };
 
 function sendAlert(req, res, next) {
@@ -37,6 +52,7 @@ function sendAlert(req, res, next) {
 };
 
 module.exports = {
+    getUserAlerts,
     createAlert,
     sendAlert
 };
