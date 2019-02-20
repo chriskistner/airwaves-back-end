@@ -29,7 +29,7 @@ function createUser(req, res, next) {
 
     axios.get(`${googleUrl}${formatAddress},+${formatCity},+${formatState}&key=${key}`)
     .then(function(response){ 
-        return userModel.createUser(req.body.userName, req.body.password, req.body.email, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
+        return userModel.createUser(req.body.userName, req.body.password, req.body.email, req.body.address, req.body.city, formatState, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
     })
     .then(function(data){
         res.status(201).send({data})
@@ -62,10 +62,43 @@ function deleteUser (req, res, next) {
     })
 };
 
+function updateUser(req, res, next) {
+    if(!req.body.userName)
+    return next({ status: 400, message: 'Missing User Name'});
+  
+    if(!req.body.password)
+    return next({ status: 400, message: 'Missing Password'});
+
+    if(!req.body.email)
+    return next({ status: 400, message: 'Missing Email'});
+
+    if (!req.body.address)
+    return next({status: 400, message: 'Missing Home Address'});
+
+    if(!req.body.city)
+    return next({status: 400, message: 'Missing Home City'});
+
+    if(!req.body.state || req.body.state.length > 2)
+    return next({status: 400, message: 'Missing Valid Home State'});
+
+    const formatAddress = req.body.address.replace(' ', '+');
+    const formatState = req.body.state.toUpperCase();
+    const formatCity = req.body.city.replace(' ', '+');
+
+    axios.get(`${googleUrl}${formatAddress},+${formatCity},+${formatState}&key=${key}`)
+    .then(function(response){ 
+        return userModel.updateUser(req.params.userId, req.body.userName, req.body.password, req.body.email, req.body.address, req.body.city, req.body.state, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
+    })
+    .then(function(data){
+        res.status(201).send({data})
+    })
+
+};
 
 module.exports = {
     createUser,
     getUser,
     getAllUsers,
     deleteUser,
+    updateUser
 }
