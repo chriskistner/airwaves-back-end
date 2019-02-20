@@ -30,7 +30,7 @@ function deleteUser(userId) {
     })
 };
 
-function createUser(userName, password, userEmail, latitude, longitude) {
+function createUser(userName, password, userEmail, address, city, state, latitude, longitude) {
     return db('users')
     .where({email: userEmail })
     .then(function([result]) {
@@ -49,6 +49,9 @@ function createUser(userName, password, userEmail, latitude, longitude) {
                 user_name: userName,
                 email: userEmail,
                 password: hashedPassword,
+                address: address,
+                city: city,
+                state: state,
                 home_latitude: latitude,
                 home_longitude: longitude
             })
@@ -61,9 +64,43 @@ function createUser(userName, password, userEmail, latitude, longitude) {
     })
 };
 
+function updateUser(userName, password, email, address, city, state, latitude, longitude) {
+    return db('users')
+    .where({email: userEmail})
+    .then(function([result]){
+        if(!result) {
+            throw {status: 400, message: "User Does Not Exist"}
+        } else {
+            return bcrypt.hash(password, 10)
+        }
+    })
+    .then(function(hashedPassword){
+        return (
+            db('users')
+            .update({
+                user_name: userName,
+                password: hashedPassword,
+                email: email,
+                address: address,
+                city: city,
+                state: state,
+                home_latitude: latitude,
+                home_longitude: longitude
+            })
+            .where({email: userEmail})
+            .returning('*')
+        )
+    })
+    .then(function([data]){
+        delete data.password;
+        return data
+    })
+};
+
 module.exports = {
     getUser,
     createUser,
     getAllUsers,
     deleteUser,
+    updateUser
 };

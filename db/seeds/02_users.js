@@ -11,6 +11,9 @@ exports.seed = function(knex, Promise) {
           user_name: 'Chris',
           email: 'chris.kistner0@gmail.com',
           password: 'password',
+          address: '2601 17th St SE',
+          city: 'Auburn',
+          state: 'WA',
           home_longitude: 47.380932,
           home_latitude: -122.234840
         },
@@ -20,6 +23,9 @@ exports.seed = function(knex, Promise) {
           user_name: 'Juniper',
           email: 'juniberryjuneboug@yahoo.com',
           password: 'password',
+          address: '26011 227th Pl SE',
+          city: 'Maple Valley',
+          state: 'WA',
           home_longitude: 47.307522,
           home_latitude: -122.225754
 

@@ -11,6 +11,7 @@ router.post('/', userController.createUser);
 router.get('/', userController.getAllUsers)
 router.get('/:userId', authController.userAuthenticated, authController.isSelf, userController.getUser);
 router.delete('/:userId', authController.userAuthenticated, authController.isSelf, userController.deleteUser);
+router.put('/:userId', authController.userAuthenticated, authController.isSelf, userController.updateUser)
 
 //User Location Routes
 router.post('/:userId/locations', authController.userAuthenticated, authController.isSelf, locationController.createLocations)
