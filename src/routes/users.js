@@ -27,6 +27,6 @@ router.post('/:userId/routes', authController.userAuthenticated, authController.
 router.delete('/:userId/routes/:routeId', authController.userAuthenticated, authController.isSelf, routeController.dropUserRoute);
 
 // User Alert Routes
-router.post('/:userId/alerts', authController.userAuthenticated, authController.isSelf, alertController.createAlert)
+router.post('/:userId/alerts', authController.userAuthenticated, authController.isSelf, alertController.sendAlert)
 
 module.exports = router
