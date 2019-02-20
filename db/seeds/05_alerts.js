@@ -8,26 +8,29 @@ exports.seed = function(knex, Promise) {
         {
           id: 1,
           user_id: '8H04HQ16',
-          location_id: 1,
-          name: 'Daily Alert',
-          alert_time: '06:00:00',
-          alert_frequency: '24'
+          type: 'Route',
+          name: 'commute',
+          polyline: 'kjsdbfjsdd84983',
+          alert_frequency: 'Daily'
         },
         {
           id: 2,
           user_id: '8H04HQ16',
-          route_id: 2,
-          name: 'Game Night',
-          alert_time: '18:00:00',
+          type: 'location',
+          name: 'Home',
+          polyline: 'kjsdbfjsdd84983',
+          longitude: 47.380932,
+          latitude: -122.234840,
           alert_frequency: 'weekly'
         },
         {
           id: 3,
-          user_id: 'NJ69KP09',
-          route_id: 3,
-          name: 'Commute Alert',
-          alert_time: '05:30:00',
-          alert_frequency: '6'
+          type: 'location',
+          name: 'Home',
+          polyline: 'kjsdbfjsdd84983',
+          longitude: 47.380932,
+          latitude: -122.234840,
+          alert_frequency: 'weekly'
         }
       ])
     })
