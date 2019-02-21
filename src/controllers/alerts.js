@@ -52,8 +52,22 @@ function sendAlert(req, res, next) {
       });
 };
 
+function dropUserAlert(req, res, next) {
+    if (!req.params.userId) return next({status: 400, message: "Bad Request, User Id Required"});
+
+    if (!req.params.alertId) return next({status: 400, message: "Bad Request, Alert ID Required"});
+
+    alertModel.deleteAlert(req.params.userId, req.params.alertId)
+    .then(result => {
+        if(!result) next({status: 400, message: "Can't find locations"})
+        res.status(200).send({result})
+    })
+
+};
+
 module.exports = {
     getUserAlerts,
     createAlert,
-    sendAlert
+    sendAlert,
+    dropUserAlert
 };

@@ -33,7 +33,18 @@ function createAlert(userId, name, type, freq, polyline, latitude, longitude) {
     .catch(console.log) 
 };
 
+function deleteAlert(userId, alertId) {
+    return db('alerts')
+    .del()
+    .where({
+        id: alertId,
+        user_id: userId
+    })
+    .returning('*')
+};
+
 module.exports = {
     getUserAlerts,
-    createAlert
+    createAlert,
+    deleteAlert
 }
