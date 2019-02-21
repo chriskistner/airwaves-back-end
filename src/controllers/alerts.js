@@ -21,18 +21,19 @@ function createAlert(req,res,next) {
 
     if(!req.body.name) return next({status: 400, message: "New Alert must have a Name"});
 
-    if(req.body.type !== 'location' || req.body.type !== 'route') return next({status: 400, message: "Invalid Alert Type"});
+    console.log(req.body)
+    if(req.body.type !== 'location' && req.body.type !== 'route') return next({status: 400, message: "Invalid Alert Type"});
 
-    if(req.body.frequency !== 'daily' || req.body.type !== 'weekly') return next({status: 400, message: "Invalid Alert Schedule Type!"})
+    if(req.body.frequency !== 'daily' && req.body.type !== 'weekly') return next({status: 400, message: "Invalid Alert Schedule Type!"})
 
     if(req.body.type = 'route') {
         const encodedLine = polyline.encode(req.body.polyline);
-        alertModel.createAlert(req.params.userId, req.body,name, req.body.type, req.body.frequency, encodedLine, req.body.longitude = '', req.body.latitude = '')
+        alertModel.createAlert(req.params.userId, req.body.name, req.body.type, req.body.frequency, encodedLine, req.body.longitude = '', req.body.latitude = '')
         .then(result => {
             res.status(201).send({result})
         })
     } else {
-        alertModel.createAlert(req.params.userId, req.body,name, req.body.type, req.body.frequency, req.body.polyine = '', req.body.longitude, req.body.latitude)
+        alertModel.createAlert(req.params.userId, req.body.name, req.body.type, req.body.frequency, req.body.polyine = '', req.body.longitude, req.body.latitude)
         .then(result => {
             res.status(201).send({result})
         })

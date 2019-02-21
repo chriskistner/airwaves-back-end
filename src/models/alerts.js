@@ -19,12 +19,12 @@ function getUserAlerts(userId) {
 };
 
 function createAlert(userId, name, type, freq, polyline, latitude, longitude) {
-    return db('Alerts')
+    return db('alerts')
     .insert({
-        user: userId,
+        user_id: userId,
         name: name,
         type: type,
-        frequency: freq,
+        alert_frequency: freq,
         polyline: polyline,
         longitude: longitude,
         latitude: latitude
