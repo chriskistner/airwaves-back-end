@@ -22,17 +22,29 @@ function createAlert(userId, name, type, freq, polyline, latitude, longitude) {
     return db('alerts')
     .insert({
         user_id: userId,
-        name: name,
         type: type,
-        alert_frequency: freq,
         polyline: polyline,
         longitude: longitude,
-        latitude: latitude
+        latitude: latitude,
+        alert_frequency: freq,
+        name: name
+    })
+    .returning('*')
+    .catch(console.log) 
+};
+
+function deleteAlert(userId, alertId) {
+    return db('alerts')
+    .del()
+    .where({
+        id: alertId,
+        user_id: userId
     })
     .returning('*')
 };
 
 module.exports = {
     getUserAlerts,
-    createAlert
+    createAlert,
+    deleteAlert
 }

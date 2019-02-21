@@ -28,7 +28,7 @@ function getUserLocation(userId, locationId){
     .returning('*')
 };
 
-function createLocation(userId, name, longitude, latitude) {
+function createLocation(userId, name, latitude, longitude) {
     return db('locations')
     .insert({
         user: userId,
