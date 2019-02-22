@@ -25,14 +25,19 @@ fetchAirQualityData = async (lat, long) => {
 
 locationAlert = async (user, loc, lat, long) => {
     const airData = await fetchAirQualityData(lat, long)
-    console.log(airData.air.indexes.usa_epa)
+    console.log(airData.pollen[0].types)
     return `
         <h1>Good Morning ${user}</h1>
         <p>Here is your scheduled Airways.com Air Quality report.</p>
         <hr />
-        <h2>Today's Air Conditions</h2>
-        <p><b>Today at Location ${loc} you have ${airData.air.indexes.usa_epa.category}</b></p>
+        <h3>Today's Air Conditions</h3>
+        <p>Today at Location ${loc} you have <b>${airData.air.indexes.usa_epa.category}</b> with a BPI of <b>${airData.air.indexes.usa_epa.aqi_display}</b></p>
         <p><b>Dominant Pollutant:</b> ${airData.air.indexes.usa_epa.dominant_pollutant}</p>
+        <hr />
+        <h3>Today's Pollen Conditions</h3>
+        <p>Today at Location ${loc}..</p>
+        <p><b>Tree Pollen:</b> ${airData.pollen[0].types.tree.index.category || 'Not in Season'} ${airData.pollen[0].types.tree.index.value || ''}</p>
+        <p><b>Grass Pollen:</b> ${airData.pollen[0].types.grass.index.category || 'Not in Season'} ${airData.pollen[0].types.grass.index.value || ''}</p>
 
     `
 };
