@@ -32,7 +32,7 @@ function createAlert(req,res,next) {
             res.status(201).send({result})
         })
     } else {
-        alertModel.createAlert(req.params.userId, req.body.name, req.body.type, req.body.frequency, req.body.polyine, parseFloat(req.body.longitude), parseFloat(req.body.latitude))
+        alertModel.createAlert(req.params.userId, req.body.name, req.body.type, req.body.frequency, req.body.polyine, parseFloat(req.body.latitude), parseFloat(req.body.longitude))
         .then(result => {
             res.status(201).send({result})
         })
