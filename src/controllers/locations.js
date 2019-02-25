@@ -1,5 +1,6 @@
 const axios = require('axios');
 const locationModel = require('../models/locations');
+const alertModel = require('../models/alerts');
 const googleUrl = process.env.GOOGLE_GEOCODE_URL;
 const key = process.env.GOOGLE_API_KEY;
 
@@ -39,12 +40,32 @@ function dropUserLocation(req, res, next) {
 
     if (!req.params.locId) return next({status: 400, message: "Bad Request, locId Required"});
 
-    locationModel.deleteLocation(req.params.userId, req.params.locId)
-    .then(result => {
-        if(!result) next({status: 400, message: "Can't find locations"})
-        res.status(200).send({result})
-    })
+    locationModel.getUserLocation(req.params.userId, req.params.locId)
+    .then(response => {
+        alertModel.getUserAlerts(req.params.userId)
+        .then(alerts => {
+            const location = response.name;
+            const userAlerts = alerts[0].alerts
+            const found = userAlerts.filter(alert => alert.type === 'location' && alert.name === location);
 
+            if(found.length !== 0) {
+                locationModel.deleteLocation(req.params.userId, req.params.locId)
+                .then(result => {
+                    if(!result) next({status: 400, message: "Can't find locations"})
+                    return alertModel.deleteAlert(req.params.userId, found[0].id)
+                })
+                .then(result => {
+                    res.status(200).send({result})
+                }) 
+            } else {
+                locationModel.deleteLocation(req.params.userId, req.params.locId)
+                .then(result => {
+                    if(!result) next({status: 400, message: "Can't find locations"})
+                    res.status(200).send({result})
+                })
+            }
+        })
+    })
 };
 
 function createLocations(req, res, next) {

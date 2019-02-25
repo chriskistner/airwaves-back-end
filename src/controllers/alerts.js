@@ -1,5 +1,4 @@
 const polyline = require('@mapbox/polyline');
-const axios = require('axios');
 const alertModel = require('../models/alerts');
 const mailGunKey = process.env.MAILGUN_API_KEY;
 const mailGunDomain = process.env.MAILGUN_DOMAIN;

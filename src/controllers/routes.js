@@ -1,5 +1,6 @@
 const polyline = require('@mapbox/polyline');
 const routeModel = require('../models/routes');
+const alertModel = require('../models/alerts');
 
 function getUserRoutes(req, res, next) {
     if(!req.params.userId) return next({status: 400, message: "Bad Request, UserId Required"});
@@ -31,12 +32,32 @@ function dropUserRoute(req, res, next) {
 
     if (!req.params.routeId) return next({status: 400, message: "Bad Request, locId Required"});
 
-    routeModel.deleteRoute(req.params.userId, req.params.routeId)
-    .then(result => {
-        if(!result) next({status: 400, message: "Can't find locations"})
-        res.status(200).send({result})
-    })
+    routeModel.getUserRoute(req.params.userId, req.params.routeId)
+    .then(response => {
+        alertModel.getUserAlerts(req.params.userId)
+        .then(alerts => {
+            const route = response.name;
+            const userAlerts = alerts[0].alerts
+            const found = userAlerts.filter(alert => alert.type === 'route' && alert.name === route);
 
+            if(found.length !== 0) {
+                routeModel.deleteRoute(req.params.userId, req.params.routeId)
+                .then(result => {
+                    if(!result) next({status: 400, message: "Can't find route"})
+                    return alertModel.deleteAlert(req.params.userId, found[0].id)
+                })
+                .then(result => {
+                    res.status(200).send({result})
+                }) 
+            } else {
+                routeModel.deleteRoute(req.params.userId, req.params.locId)
+                .then(result => {
+                    if(!result) next({status: 400, message: "Can't find route"})
+                    res.status(200).send({result})
+                })
+            }
+        })
+    })
 };
 
 function createUserRoute(req, res, next) {
