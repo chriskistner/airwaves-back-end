@@ -35,19 +35,19 @@ function createUser(req, res, next) {
     .then(function(response){ 
         return userModel.createUser(req.body.userName, req.body.password, req.body.email, req.body.address, req.body.city, formatState, response.data.results[0].geometry.location.lat, response.data.results[0].geometry.location.lng)
     })
-    .then(function(data){
-        const message = {
-            from: 'airways.com <me@samples.mailgun.org>',
-            to: data.email,
-            subject: 'Welcome to Airways',
-            html: email.welcomeEmail(data.user_name, data.address, data.city, data.state)
-          };
-        return mailgun.messages().send(message);
-    })
+    // .then(function(data){
+    //     const message = {
+    //         from: 'airways.com <me@samples.mailgun.org>',
+    //         to: data.email,
+    //         subject: 'Welcome to Airways',
+    //         html: email.welcomeEmail(data.user_name, data.address, data.city, data.state)
+    //       };
+    //     return mailgun.messages().send(message);
+    // })
     .then(data => {
         res.status(201).send({data})
     })
-    .catch(console.error) 
+    .catch(next) 
 };
 
 function getUser (req, res, next) {
