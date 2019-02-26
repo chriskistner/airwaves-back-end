@@ -21,7 +21,7 @@ function createAlert(req,res,next) {
 
     if(req.body.type !== 'location' && req.body.type !== 'route') return next({status: 400, message: "Invalid Alert Type"});
 
-    if(req.body.frequency !== 'daily' && req.body.type !== 'weekly') return next({status: 400, message: "Invalid Alert Schedule Type!"})
+    if(!req.body.frequency) return next({status: 400, message: "Invalid Alert Schedule Type!"})
 
     if(req.body.type === 'route') {
         const encodedLine = polyline.encode(req.body.polyline);
