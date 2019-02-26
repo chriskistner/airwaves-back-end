@@ -23,9 +23,6 @@ sendEmails = async (email, user, type, lat, long, polyline, alert ) => {
       };
        
       return mailgun.messages().send(data)
-      .catch(result => {
-          console.log(result)
-      })
 };
 
 getAlerts()
