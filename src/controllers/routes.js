@@ -50,7 +50,7 @@ function dropUserRoute(req, res, next) {
                     res.status(200).send({result})
                 }) 
             } else {
-                routeModel.deleteRoute(req.params.userId, req.params.locId)
+                routeModel.deleteRoute(req.params.userId, req.params.routeId)
                 .then(result => {
                     if(!result) next({status: 400, message: "Can't find route"})
                     res.status(200).send({result})
